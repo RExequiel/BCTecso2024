@@ -21,10 +21,9 @@ function Login() {
     console.log("Password:", values.password);
 
     try {
-      // Usamos el servicio de autenticación para realizar la solicitud
       const response = await authenticationService.login(values.email, values.password);
       console.log("Response:", response.data, values);
-      navigate("/home"); // Navegar al home después del login exitoso
+      navigate("/home");
     } catch (error) {
       console.error("Error:", error);
     }
