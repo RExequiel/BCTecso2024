@@ -1,9 +1,9 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Form, Button, Container } from "react-bootstrap";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import MumaLogo from '../components/icons/logo_muma';
+import authenticationService from "../services/authenticationService";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string("Debe ingresar su usuario")
@@ -16,21 +16,18 @@ const validationSchema = Yup.object().shape({
 
 function Login() {
   const navigate = useNavigate();
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     console.log("Email:", values.email);
     console.log("Password:", values.password);
-    axios
-      .post("http://localhost:8081/api/Authentication/token", {
-        user: values.email,
-        password: values.password,
-      })
-      .then((response) => {
-        console.log("Response:", response.data?.token);
-        navigate("/home");
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+
+    try {
+      // Usamos el servicio de autenticación para realizar la solicitud
+      const response = await authenticationService.login(values.email, values.password);
+      console.log("Response:", response.data, values);
+      navigate("/home"); // Navegar al home después del login exitoso
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
