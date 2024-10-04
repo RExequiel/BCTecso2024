@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Form, Button, Container } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import MumaLogo from '../components/icons/logo_muma';
+import MumaLogo from '../Components/icons/logo_muma';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string("Debe ingresar su usuario")
