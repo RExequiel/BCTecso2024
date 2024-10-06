@@ -2,7 +2,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { Form, Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import MumaLogo from '../components/icons/logo_muma';
+import MumaLogo from '../Components/icons/logo_muma';
 import authenticationService from "../services/authenticationService";
 
 const validationSchema = Yup.object().shape({
