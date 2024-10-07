@@ -1,8 +1,25 @@
+import { useEffect, useState } from "react";
+import SplashScreen from "./Components/SplashScreen/SplashScreen";
 import RoutesConfig from "./routes/RoutesConfig";
 
 function App() {
+
+  const [isShowSplash, setIsShowSplash] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsShowSplash(false);
+    }, 2000);
+  })
+
   return (
-    <RoutesConfig/>
+    <>
+      {isShowSplash ? (
+        <SplashScreen />
+      ) : (
+        <RoutesConfig/>
+      )}
+    </>
   );
 }
 
