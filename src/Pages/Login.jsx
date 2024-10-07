@@ -2,7 +2,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { Form, Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import MumaLogo from '../Components/icons/logo_muma';
+import MumaLogo from '../Components/Login/logo_muma';
 import authenticationService from "../services/authenticationService";
 
 const validationSchema = Yup.object().shape({
@@ -30,17 +30,15 @@ function Login() {
   };
 
   return (
-    <div className="bg-white vh-100 justify-content-center align-items-center">
       <Container
-        className="bg-white text-white rounded-2 py-4 align-self-center"
+        className="bg-white vh-100 justify-content-center align-items-center text-white rounded-2 py-4 align-self-center"
         style={{
           maxWidth: "400px",
           paddingTop: "50px",
-          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
         }}
       >
 
-      <div>
+      <div style={{marginTop: "10px"}}>
         <MumaLogo />
       </div>
         <Formik
@@ -62,11 +60,11 @@ function Login() {
           }) => (
             <Form onSubmit={formikHandleSubmit}>
               <Form.Group controlId="formBasicEmail">
-                {/* <Form.Label>Email address</Form.Label> */}
                 <Form.Control
                   type="email"
                   name="email"
                   placeholder="Email*"
+                  style={{height: "50px", backgroundColor: "#f0f0f0"}}
                   value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -78,11 +76,11 @@ function Login() {
               </Form.Group>
 
               <Form.Group controlId="formBasicPassword" className="mt-3">
-                <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
                   name="password"
                   placeholder="Contraseña*"
+                  style={{height: "50px", backgroundColor: "#f0f0f0"}}
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -94,16 +92,25 @@ function Login() {
               </Form.Group>
 
 
-              <Form.Group controlId="formBasicCheckbox" className="mt-1">
-                <Form.Check
-                  type="checkbox"
-                  name="rememberMe"
-                  label="Recordar contraseña"
-                  style = {{color: "#000000"}}
-                  checked={values.rememberMe}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
+              <Form.Group controlId="formBasicCheckbox" className="mt-1 d-flex justify-content-between">
+                <div className="d-flex align-items-center">
+                  <Form.Check
+                    type="checkbox"
+                    name="rememberMe"
+                    label="Recordame"
+                    style={{ color: "#000000", marginRight: "10px", fontFamily: "Montserrat" }}
+                    checked={values.rememberMe}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <Button
+                    variant="link"
+                    style={{ color: "#017179", textDecoration: "none", paddingLeft: 0, fontFamily: "Montserrat", marginLeft: "80px"}}
+                    onClick={() => navigate("")}
+                  >
+                    ¿Olvidaste tu contraseña?
+                  </Button>
+                </div>
               </Form.Group>
               
 
@@ -112,7 +119,7 @@ function Login() {
                   variant="primary"
                   type="submit"
                   className="mt-4 align-self-center w-100"
-                  style={{ backgroundColor: "#F08318", borderColor: "#F08318" }}
+                  style={{backgroundColor: "#F08318", borderColor: "#F08318", color: "#FFFF", height: "50px", width: "328px", }}
                   disabled={isSubmitting}
                 >
                   Ingresar
@@ -123,9 +130,9 @@ function Login() {
                   variant="primary"
                   type="submit"
                   className="mt-4 align-self-center w-100"
-                  style={{ backgroundColor: "#ffff", borderColor: "#F08318", color: "#F08318" }}
+                  style={{ backgroundColor: "#ffff", borderColor: "#F08318", color: "#F08318", height: "50px", width: "328px", }}
                   disabled={isSubmitting}
-                  //agregar onclick  register
+                  onClick={() => navigate("seleccionUsuario")}
                 >
                   Crear cuenta
                 </Button>
@@ -134,7 +141,6 @@ function Login() {
           )}
         </Formik>
       </Container>
-    </div>
   );
 }
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 123.75 37.37">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #0199a3;
+      }
+
+      .cls-2 {
+        fill: #f8ad34;
+      }
+    </style>
+  </defs>
+  <g id="Propuestas_Logotipos">
+    <g>
+      <path class="cls-1" d="M0,3.12C19.95-2.61,44.04-1.24,59.56,13.89c5.06,4.88,8.89,10.87,11.71,17.19l-1.01-.33c11.92-5.8,34.39-14,43.34.02-9.35-13.74-31.71-4.61-43.32,1.62C59.26,8.08,36.17-.07,10.96,4.5c-3.27.59-6.62,1.37-9.66,2.4L0,3.12h0Z"/>
+      <ellipse class="cls-2" cx="115.21" cy="28.64" rx="8.73" ry="8.54" transform="translate(77.15 141.09) rotate(-85.26)"/>
+    </g>
+  </g>
+</svg>
