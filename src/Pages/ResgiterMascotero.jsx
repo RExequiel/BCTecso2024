@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { Form, Button, InputGroup, Container } from "react-bootstrap";
 import { useState } from "react";
-import MumaLogo from '../Components/icons/logo_muma';
+import MumaLogo from '../Components/Login/logo_muma';
 import mascoterosService from "../services/mascoterosService";
 
 const validationSchema = Yup.object().shape({
