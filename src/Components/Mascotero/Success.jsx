@@ -15,11 +15,8 @@ const Success = () => {
           <div className="image-container">
             <img src="src/assets/img/dog-success.png" alt="dog" className="dog-success"/>
           </div>
-          <h4>Este e-mail ya se 
-          encuentra registrado.</h4>
-          <p>Si no recordás tu contraseña podés 
-            cambiarla desde el login ingresando en
-            el enlace “Olvidé mi contraseña.</p>
+          <h4>¡Qué bueno que estés acá!</h4>
+          <p>¡Listo ya ! Ya puedes empezar a usar tu cuenta.</p>
           <button className="open-email-btn" onClick={goToLogin}>Ir al login</button>
         </div>
       </div>
