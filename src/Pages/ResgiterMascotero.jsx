@@ -48,11 +48,9 @@ function RegisterMascotero() {
 
       // Llamar al servicio de registro
       const response = await mascoterosService.registerMascotero(mascoteroData);
-      console.log("Respuesta:", response);
-      if (response.mascotero.id && response.mascotero.nombre) {
-        console.log(`Usuario registrado con éxito: ID = ${response.mascotero.id}, Nombre = ${response.mascotero.nombre}`);
-        // navigate("/")
-        alert("Usuario `" + response.mascotero.nombre + "` con id `" + response.mascotero.id + "` registrado con exito");
+      if (response.mascotero.email == mascoteroData.email) {
+        console.log("Respuesta:", response);
+        navigate("/send-confirmation", { state: { mascoteroName: response.mascotero.nombre, mascoteroEmail: response.mascotero.email } });
       }
       
     } catch (error) {
