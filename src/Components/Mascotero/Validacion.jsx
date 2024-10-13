@@ -1,16 +1,15 @@
 import React from 'react';
-import './EmailConfirmation.css';
+import './Validacion.css';
 import { useLocation } from 'react-router-dom';
-import mascoterosService from '../../services/mascoterosService';
 
-const EmailConfirmation = () => {
+const Validacion = () => {
     const location = useLocation(); // Obtiene el objeto de ubicación
     const { mascoteroName, mascoteroEmail } = location.state || {};
   
     // Función para enviar el correo
     const sendEmail = async () => {
       try {
-        alert("Enviando correo..." + mascoteroEmail);      
+        alert("Enviando correo..." + mascoteroEmail + "Luego: Que bueno qu estes aca");      
       } catch (error) {
         alert("Ocurrio un error al enviar el correo");
       }
@@ -31,4 +30,4 @@ const EmailConfirmation = () => {
     );
   };
   
-  export default EmailConfirmation;
+  export default Validacion;

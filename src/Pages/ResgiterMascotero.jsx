@@ -50,16 +50,14 @@ function RegisterMascotero() {
 
       // Llamar al servicio de registro
       const response = await mascoterosService.registerMascotero(mascoteroData);
+
       if (response.mascotero.email == mascoteroData.email) {
         console.log("Respuesta:", response);
-        navigate("/send-confirmation", { state: { mascoteroName: response.mascotero.nombre, mascoteroEmail: response.mascotero.email } });
-      }
-      
+        navigate("/validacion", { state: { mascoteroName: response.mascotero.nombre, mascoteroEmail: response.mascotero.email } });
+      } 
     } catch (error) {
-      if (error.response.status === 400) {
-        alert("Ocurrió un error al registrarse. Por favor, inténtelo de nuevo.");
-      } else {
-        alert("Ocurrio un error al registrarse. Por favor, inténtelo de nuevo.");
+      if (error.status === 400) {
+        navigate("/registro");
       }
     }
   };
