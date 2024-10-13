@@ -5,6 +5,7 @@ import SelectionUsuario from "../Components/SeleccionUsuario/SelectionUsuario";
 import Mascotero from "../Pages/ResgiterMascotero";
 import Validacion from "../Components/Mascotero/Validacion";
 import Registro from "../Components/Mascotero/Registro";
+import Success from "../Components/Mascotero/Success";
 
 const RoutesConfig = () => {
   return (
@@ -15,6 +16,7 @@ const RoutesConfig = () => {
       <Route path="/mascotero" element={<Mascotero />} />
       <Route path="/validacion" element={<Validacion />} />
       <Route path="/registro" element={<Registro />} />
+      <Route path="/success" element={<Success />} />
     </Routes>
   );
 };
