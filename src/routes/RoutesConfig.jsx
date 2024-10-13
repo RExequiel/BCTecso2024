@@ -3,7 +3,7 @@ import Home from "../Pages/Home";
 import Login from "../Pages/Login";
 import SelectionUsuario from "../Components/SeleccionUsuario/SelectionUsuario";
 import Mascotero from "../Pages/ResgiterMascotero";
-import ExampleRedux from "../pages/ExampleRedux";
+import ExampleRedux from "../Pages/ExampleRedux";
 
 const RoutesConfig = () => {
   return (
