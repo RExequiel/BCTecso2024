@@ -4,8 +4,8 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { Form, Button, InputGroup, Container } from "react-bootstrap";
 import { useState } from "react";
+import MumaLogo from '../Components/Login/logo_muma';
 import mascoterosService from "../services/mascoterosService";
-import MumaLogo from "../Components/Login/logo_muma";
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string().required("Nombre y apellido son requeridos"),
