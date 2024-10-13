@@ -1,15 +1,22 @@
 import React from 'react';
 import './Validacion.css';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Validacion = () => {
-    const location = useLocation(); // Obtiene el objeto de ubicación
+    const location = useLocation();
     const { mascoteroName, mascoteroEmail } = location.state || {};
   
+    const navigate = useNavigate();
+    const goToSuccess = () => {
+      navigate("/success");
+    };
+
     // Función para enviar el correo
     const sendEmail = async () => {
       try {
-        alert("Enviando correo..." + mascoteroEmail + "Luego: Que bueno qu estes aca");      
+        alert("Enviando correo..." + mascoteroEmail);
+        goToSuccess("/success");    
       } catch (error) {
         alert("Ocurrio un error al enviar el correo");
       }
