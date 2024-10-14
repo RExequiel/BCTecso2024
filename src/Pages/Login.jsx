@@ -132,7 +132,7 @@ function Login() {
                   className="mt-4 align-self-center w-100"
                   style={{ backgroundColor: "#ffff", borderColor: "#F08318", color: "#F08318", height: "50px", width: "328px", }}
                   disabled={isSubmitting}
-                  onClick={() => navigate("seleccionUsuario")}
+                  onClick={() => navigate("/seleccionUsuario")}
                 >
                   Crear cuenta
                 </Button>
