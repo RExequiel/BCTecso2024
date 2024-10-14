@@ -4,7 +4,7 @@ import Login from "../Pages/Login";
 import SelectionUsuario from "../Pages/SelectionUsuario";
 import Screen from "../Pages/StartedScreen";
 import Mascotero from "../Pages/ResgiterMascotero";
-import HomeProtectoraPage from "../pages/HomeProtectora";
+import HomeProtectoraPage from "../Pages/HomeProtectora";
 import Protectora from '../Components/Protectora/Protectora';
 import ValidacionCuenta from "../Components/ValidacionRegistro/ValidacionCuenta";
 import CorreoRegistrado from "../Components/ValidacionRegistro/CorreoRegistrado";
