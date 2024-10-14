@@ -1,15 +1,27 @@
-import { Routes, Route } from 'react-router-dom';
-import Home from './Pages/Home';
-import Login from './Pages/Login';
-import Protectora from './Components/Protectora/Protectora';
+
+import { useEffect, useState } from "react";
+import SplashScreen from "./Components/SplashScreen/SplashScreen";
+import RoutesConfig from "./routes/RoutesConfig";
+
 
 function App() {
+
+  const [isShowSplash, setIsShowSplash] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsShowSplash(false);
+    }, 2000);
+  })
+
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/home" element={<Home />} />
-      <Route path="/protectora" element={<Protectora />} />
-    </Routes>
+    <>
+      {isShowSplash ? (
+        <SplashScreen />
+      ) : (
+        <RoutesConfig/>
+      )}
+    </>
   );
 }
 

@@ -6,22 +6,18 @@
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
-
 .title {
   text-align: center;
   font-size: 24px;
   margin-bottom: 20px;
 }
-
 .form {
   display: flex;
   flex-direction: column;
 }
-
 .formGroup {
   margin-bottom: 15px;
 }
-
 input,
 textarea,
 select {
@@ -32,17 +28,14 @@ select {
   font-size: 16px;
   background-color: #f9f9f9;
   color: #A5A5A5; 
-
 input::placeholder,
 textarea::placeholder {
   color: #A5A5A5; 
 }
-
 input:focus::placeholder,
 textarea:focus::placeholder {
   color: #A5A5A5; 
 }
-
 input:focus,
 textarea:focus,
 select:focus {
@@ -50,7 +43,6 @@ select:focus {
   border-color: #F8AD34;
   color: #F8AD34; 
 }
-
 select {
   appearance: none;
   background-color: #f9f9f9;
@@ -60,31 +52,23 @@ select {
   font-size: 16px;
   color: #A5A5A5; 
 }
-
-
 select option:first-child {
   color: #A5A5A5;
 }
-
-
 select:not(:focus):invalid {
   color: #A5A5A5; 
 }
-
 select:valid {
   color: #F8AD34; 
 }
-
 .errorInput {
   border-color: red;
   background-color: #fff6f6; 
 }
-
 .errorMessage {
   color: red;
   font-size: 12px;
 }
-
 .submitButton {
   padding: 10px 20px;
   background-color: #F08318;
@@ -94,17 +78,14 @@ select:valid {
   font-size: 16px;
   cursor: pointer;
 }
-
 .submitButton:hover {
   background-color: #F8AD34;
 }
-
 .message {
   margin-top: 20px;
   color: green;
   font-size: 14px;
 }
-
 .success {
   margin-top: 20px;
   padding: 15px;
@@ -112,19 +93,6 @@ select:valid {
   border: 1px solid #60b060;
   border-radius: 5px;
   text-align: center;
-}
-
-.inlineFormGroup {
-  display: flex;
-  justify-content: space-between;
-}
-
-.inlineFormGroup .formGroup {
-  flex: 1;
-}
-
-.inlineFormGroup .formGroup:first-child {
-  margin-right: 10px; 
 }
 
 input,
@@ -138,8 +106,54 @@ select {
   background-color: #f9f9f9;
   color: #A5A5A5; 
 }
-
 select:valid {
   color: #F8AD34; 
 }
+}
+
+.image-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  margin-bottom: 20px; 
+}
+
+.image {
+  width: 40%; 
+  height: auto;
+  object-fit: cover;
+}
+
+.registroButton {
+  padding: 10px 20px;
+  background-color: #F08318;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.registroButton:hover {
+  background-color: #F8AD34;
+}
+.inlineFormGroup {
+  display: flex;
+  justify-content: space-between;
+}
+.inlineFormGroup .formGroup {
+  flex: 1;
+}
+.inlineFormGroup .formGroup:first-child {
+  margin-right: 10px; 
+}
+
+.errorInput {
+  border-color: red;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 12px;
 }

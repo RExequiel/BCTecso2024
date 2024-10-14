@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; 
-import styles from './Protectora.module.css';
-import MumaLogo from '../icons/logo_muma';
+import { useNavigate } from 'react-router-dom';
 import emailjs from 'emailjs-com';
+import styles from './Protectora.module.css';
 
 const Protectora = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +12,9 @@ const Protectora = () => {
     contrasena: '',
     confirmarContrasena: '',
     provincia: '',
+    nombreProvincia: '', 
     ciudad: '',
+    nombreCiudad: '',
     calle: '',
     numero: '',
     piso: '',
@@ -21,13 +23,15 @@ const Protectora = () => {
     instagram: '',
     facebook: '',
   });
-
+  
   const [provincias, setProvincias] = useState([]);
   const [ciudades, setCiudades] = useState([]);
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState('');
   const [isRegistered, setIsRegistered] = useState(false);
-  const [typingTimeout, setTypingTimeout] = useState(null); 
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchProvincias = async () => {
@@ -55,226 +59,232 @@ const Protectora = () => {
     fetchCiudades();
   }, [formData.provincia]);
 
+  const handleProvinciaChange = (e) => {
+    const selectedProvincia = provincias.find(p => p.id === parseInt(e.target.value));
+    setFormData({
+      ...formData,
+      provincia: selectedProvincia.id,
+      nombreProvincia: selectedProvincia.nombre 
+    });
+  };
+
+  const handleCiudadChange = (e) => {
+    const selectedCiudad = ciudades.find(c => c.id === parseInt(e.target.value));
+    setFormData({
+      ...formData,
+      ciudad: selectedCiudad.id,
+      nombreCiudad: selectedCiudad.nombre 
+    });
+  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-
-    if (e.target.name === 'confirmarContrasena') {
-      if (typingTimeout) {
-        clearTimeout(typingTimeout);
-      }
-      
-      setTypingTimeout(setTimeout(() => {
-        validatePasswordMatch(e.target.value, formData.contrasena);
-      }, 1000));
-    }
   };
 
-  const validatePasswordMatch = (confirmPassword, password) => {
-    if (confirmPassword && password && confirmPassword !== password) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        confirmarContrasena: 'Las contraseñas no coinciden',
-      }));
-    } else {
-      setErrors((prevErrors) => {
-        const { confirmarContrasena, ...rest } = prevErrors;
-        return rest;
-      });
-    }
-  };
-
-  const validate = () => {
-    const newErrors = {};
-
-    if (!formData.nombre) newErrors.nombre = 'El nombre de la protectora es requerido';
-    if (!formData.descripcion) newErrors.descripcion = 'La descripción es requerida';
-    if (!formData.email) newErrors.email = 'El email es requerido';
-    if (!formData.contrasena) {
-      newErrors.contrasena = 'El campo contraseña es requerido';
-    }
-    if (!formData.confirmarContrasena) {
-      newErrors.confirmarContrasena = 'El campo confirmar contraseña es requerido';
-    } else if (formData.contrasena !== formData.confirmarContrasena) {
-      newErrors.confirmarContrasena = 'Las contraseñas no coinciden';
-    }
-    if (!formData.provincia) newErrors.provincia = 'La provincia es requerida';
-    if (!formData.ciudad) newErrors.ciudad = 'La ciudad es requerida';
-    
-    return newErrors;
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const formErrors = validate();
-    setErrors(formErrors);
+    setLoading(true);
 
-    if (Object.keys(formErrors).length === 0) {
-      emailjs.send('service_muma', 'template_muma', {
-        email: formData.email,
-        nombre: formData.nombre,
-      }, 'tu_user_id')
-        .then((response) => {
-          console.log('Correo enviado!', response.status, response.text);
-          setMessage('Registro exitoso. Por favor, revisa tu correo electrónico para confirmar tu cuenta.');
-        })
-        .catch((err) => {
-          console.error('Error al enviar el correo:', err);
-          setMessage('Hubo un error al enviar el correo. Inténtalo de nuevo.');
+    const payload = {
+      email: formData.email,
+      password: formData.contrasena,
+      nombreUsuario: 'NombreUsuario',  
+      apellidoUsuario: 'ApellidoUsuario',  
+      nombreProtectora: formData.nombre,
+      descripcion: formData.descripcion,
+      sitioWeb: formData.sitioWeb || '',
+      instagram: formData.instagram || '',
+      facebook: formData.facebook || '',
+      cantidadDeMascotas: 10, 
+      direccion: {
+        idCiudad: parseInt(formData.ciudad),
+        calle: formData.calle,
+        numero: formData.numero,
+        piso: formData.piso || '',
+        departamento: formData.departamento || '',
+        provincia: {
+          id: parseInt(formData.provincia),
+          nombre: formData.nombreProvincia  
+        },
+        ciudad: {
+          id: parseInt(formData.ciudad),
+          nombre: formData.nombreCiudad,  
+          idProvincia: parseInt(formData.provincia)
+        }
+      }
+    };
+
+    try {
+      console.log(JSON.stringify(payload, null, 2));
+
+      const response = await axios.post('http://localhost:8081/api/Protectoras/registro', payload);
+
+      if (response.status === 200) {
+        
+        emailjs.send(
+          'service_id', 
+          'template_id', 
+          {
+            to_name: formData.nombre,
+            to_email: formData.email,
+          },
+          'public_key' 
+        ).then((result) => {
+          console.log('Correo enviado:', result.text);
+        }).catch((error) => {
+          console.error('Error al enviar el correo:', error.text);
         });
+
+        setIsRegistered(true);
+        setMessage('¡Registro exitoso! Te hemos enviado un correo para confirmar tu cuenta.');
+        navigate('/validacion-cuenta'); 
+      } else {
+        setMessage('Error al registrar la protectora.');
+      }
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message === 'Correo ya registrado') {
+        setMessage('El correo ya se encuentra registrado.');
+        navigate('/correo-registrado'); 
+      } else {
+        console.error('Error al enviar los datos:', error);
+        setMessage('Ocurrió un error al registrar la protectora.');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className={styles.container}>
-      <MumaLogo />
-      <h1 className={styles.title}>Registro Protectora</h1>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        
-        {}
+      <form onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
           <input
             type="text"
             name="nombre"
             value={formData.nombre}
             onChange={handleChange}
-            className={errors.nombre ? styles.errorInput : ''}
-            placeholder="Nombre Protectora*"
+            className={styles.input}
+            placeholder="Nombre Protectora"
+            required
           />
-          {errors.nombre && <p className={styles.errorMessage}>{errors.nombre}</p>}
         </div>
-
         <div className={styles.formGroup}>
           <textarea
             name="descripcion"
             value={formData.descripcion}
             onChange={handleChange}
-            className={errors.descripcion ? styles.errorInput : ''}
-            placeholder="Descripción*"
+            className={styles.input}
+            placeholder="Descripción"
+            required
           />
-          {errors.descripcion && <p className={styles.errorMessage}>{errors.descripcion}</p>}
         </div>
-
         <div className={styles.formGroup}>
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className={errors.email ? styles.errorInput : ''}
-            placeholder="Email*"
+            className={styles.input}
+            placeholder="Email"
+            required
           />
-          {errors.email && <p className={styles.errorMessage}>{errors.email}</p>}
         </div>
-
         <div className={styles.formGroup}>
           <input
             type="password"
             name="contrasena"
             value={formData.contrasena}
             onChange={handleChange}
-            className={`${styles.input} ${errors.contrasena ? styles.errorInput : ''}`}
-            placeholder="Contraseña*"
+            className={styles.input}
+            placeholder="Contraseña"
+            required
           />
-          {errors.contrasena && <p className={styles.errorMessage}>{errors.contrasena}</p>}
         </div>
-
         <div className={styles.formGroup}>
           <input
             type="password"
             name="confirmarContrasena"
             value={formData.confirmarContrasena}
             onChange={handleChange}
-            className={`${styles.input} ${errors.confirmarContrasena ? styles.errorInput : ''}`}
-            placeholder="Confirmar Contraseña*"
+            className={styles.input}
+            placeholder="Confirmar Contraseña"
+            required
           />
-          {errors.confirmarContrasena && <p className={styles.errorMessage}>{errors.confirmarContrasena}</p>}
         </div>
-
-        {}
         <div className={styles.formGroup}>
           <select
             name="provincia"
+            onChange={handleProvinciaChange}
             value={formData.provincia}
-            onChange={handleChange}
-            className={errors.provincia ? styles.errorInput : ''}
+            className={styles.input}
             required
           >
-            <option value="">Seleccione una provincia*</option>
+            <option value="">Selecciona una Provincia</option>
             {provincias.map((provincia) => (
               <option key={provincia.id} value={provincia.id}>
                 {provincia.nombre}
               </option>
             ))}
           </select>
-          {errors.provincia && <p className={styles.errorMessage}>{errors.provincia}</p>}
         </div>
-
-        {}
         <div className={styles.formGroup}>
           <select
             name="ciudad"
+            onChange={handleCiudadChange}
             value={formData.ciudad}
-            onChange={handleChange}
-            className={errors.ciudad ? styles.errorInput : ''}
+            className={styles.input}
             required
           >
-            <option value="">Seleccione una ciudad*</option>
+            <option value="">Selecciona una Ciudad</option>
             {ciudades.map((ciudad) => (
               <option key={ciudad.id} value={ciudad.id}>
                 {ciudad.nombre}
               </option>
             ))}
           </select>
-          {errors.ciudad && <p className={styles.errorMessage}>{errors.ciudad}</p>}
         </div>
-
-        {}
         <div className={styles.formGroup}>
           <input
-              type="text"
-              name="calle"
-              value={formData.calle}
-              onChange={handleChange}
-              className={styles.input}
-              placeholder="Calle"
+            type="text"
+            name="calle"
+            value={formData.calle}
+            onChange={handleChange}
+            className={styles.input}
+            placeholder="Calle"
+            required
           />
         </div>
-
-        <div className={styles.inlineFormGroup}>
-          <div className={styles.formGroup}>
-              <input
-                  type="text"
-                  name="numero"
-                  value={formData.numero}
-                  onChange={handleChange}
-                  className={styles.input}
-                  placeholder="Número"
-              />
-          </div>
-          <div className={styles.formGroup}>
-              <input
-                  type="text"
-                  name="piso"
-                  value={formData.piso}
-                  onChange={handleChange}
-                  className={styles.input}
-                  placeholder="Piso"
-              />
-          </div>
-      </div>
-
-      <div className={styles.formGroup}>
+        <div className={styles.formGroup}>
           <input
-              type="text"
-              name="departamento"
-              value={formData.departamento}
-              onChange={handleChange}
-              className={styles.input}
-              placeholder="Departamento"
+            type="text"
+            name="numero"
+            value={formData.numero}
+            onChange={handleChange}
+            className={styles.input}
+            placeholder="Número"
+            required
           />
-      </div>
-
-        {}
+        </div>
+        <div className={styles.formGroup}>
+          <input
+            type="text"
+            name="piso"
+            value={formData.piso}
+            onChange={handleChange}
+            className={styles.input}
+            placeholder="Piso"
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <input
+            type="text"
+            name="departamento"
+            value={formData.departamento}
+            onChange={handleChange}
+            className={styles.input}
+            placeholder="Departamento"
+          />
+        </div>
         <div className={styles.formGroup}>
           <input
             type="text"
@@ -285,7 +295,6 @@ const Protectora = () => {
             placeholder="Sitio Web"
           />
         </div>
-
         <div className={styles.formGroup}>
           <input
             type="text"
@@ -296,7 +305,6 @@ const Protectora = () => {
             placeholder="Instagram"
           />
         </div>
-
         <div className={styles.formGroup}>
           <input
             type="text"
@@ -307,12 +315,11 @@ const Protectora = () => {
             placeholder="Facebook"
           />
         </div>
-
-        <button type="submit" className={styles.submitButton}>Registrar</button>
+        <button type="submit" className={styles.registroButton} disabled={loading}>
+          {loading ? 'Registrando...' : 'Registrar'}
+        </button>
       </form>
-
       {message && <p className={styles.message}>{message}</p>}
-      
       {isRegistered && (
         <div className={styles.success}>
           <p>¡Registro exitoso! Te hemos enviado un correo para confirmar tu cuenta.</p>
