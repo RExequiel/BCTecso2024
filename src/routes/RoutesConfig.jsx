@@ -10,6 +10,9 @@ import ValidacionCuenta from "../Components/ValidacionRegistro/ValidacionCuenta"
 import CorreoRegistrado from "../Components/ValidacionRegistro/CorreoRegistrado";
 import SuccesScreen from "../Components/ValidacionRegistro/SuccesScreen";
 import ExampleRedux from "../Pages/ExampleRedux";
+import Validacion from "../Components/Mascotero/Validacion";
+import Registro from "../Components/Mascotero/Registro";
+import Success from "../Components/Mascotero/Success";
 
 const RoutesConfig = () => {
   return (
@@ -26,6 +29,9 @@ const RoutesConfig = () => {
       <Route path="/mascotero" element={<Mascotero />} />
       <Route path="/exampleRedux" element={<ExampleRedux />} />
       <Route path="/homeProtectora" element={<HomeProtectoraPage />} />
+      <Route path="/validacion" element={<Validacion />} />
+      <Route path="/registro" element={<Registro />} />
+      <Route path="/success" element={<Success />} />
     </Routes>
   );
 };

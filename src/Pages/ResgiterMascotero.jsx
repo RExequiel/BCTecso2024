@@ -6,6 +6,7 @@ import { Form, Button, InputGroup, Container } from "react-bootstrap";
 import { useState } from "react";
 import MumaLogo from '../Components/Login/logo_muma';
 import mascoterosService from "../services/mascoterosService";
+import { Eye, EyeOff } from "react-feather";
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string()
@@ -49,18 +50,14 @@ function RegisterMascotero() {
 
       // Llamar al servicio de registro
       const response = await mascoterosService.registerMascotero(mascoteroData);
-      console.log("Respuesta:", response);
-      if (response.mascotero.id && response.mascotero.nombre) {
-        console.log(`Usuario registrado con éxito: ID = ${response.mascotero.id}, Nombre = ${response.mascotero.nombre}`);
-        // navigate("/")
-        alert("Usuario `" + response.mascotero.nombre + "` con id `" + response.mascotero.id + "` registrado con exito");
-      }
-      
+
+      if (response.mascotero.email == mascoteroData.email) {
+        console.log("Respuesta:", response);
+        navigate("/validacion", { state: { mascoteroName: response.mascotero.nombre, mascoteroEmail: response.mascotero.email } });
+      } 
     } catch (error) {
-      if (error.response.status === 400) {
-        alert("Ocurrió un error al registrarse. Por favor, inténtelo de nuevo.");
-      } else {
-        alert("Ocurrio un error al registrarse. Por favor, inténtelo de nuevo.");
+      if (error.status === 400) {
+        navigate("/registro");
       }
     }
   };
@@ -153,9 +150,13 @@ function Mascotero({ onSubmit }) {
                   onBlur={handleBlur}
                   isInvalid={touched.password && !!errors.password} // Verifica si el campo fue tocado y tiene errores
                 />
-                <Button variant="outline-secondary" onClick={togglePasswordVisibility}>
-                  {showPassword ? "Ocultar" : "Mostrar"}
-                </Button>
+               <InputGroup.Text onClick={togglePasswordVisibility} style={{ cursor: "pointer" }}>
+                {showPassword ? (
+                  <Eye style={{ color: "#F08318" }} />  // Ícono para ocultar (color naranja)
+                ) : (
+                  <EyeOff style={{ color: "#F08318" }} />  // Ícono para mostrar (color naranja)
+                )}
+              </InputGroup.Text>
                 <Form.Control.Feedback type="invalid">
                   {errors.password} {/* Muestra el mensaje de error si hay */}
                 </Form.Control.Feedback>
@@ -164,24 +165,28 @@ function Mascotero({ onSubmit }) {
 
             {/* Confirmar Contraseña */}
             <Form.Group controlId="formBasicConfirmPassword" className="mt-3">
-              <InputGroup>
-                <Form.Control
-                  type={showConfirmPassword ? "text" : "password"}
-                  name="confirmPassword"
-                  placeholder="Confirmar contraseña*"
-                  value={values.confirmPassword}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  isInvalid={!!errors.confirmPassword && touched.confirmPassword}
-                />
-                <Button variant="outline-secondary" onClick={toggleConfirmPasswordVisibility}>
-                  {showConfirmPassword ? "Ocultar" : "Mostrar"}
-                </Button>
-              </InputGroup>
-              <Form.Control.Feedback type="invalid">
-                {errors.confirmPassword}
-              </Form.Control.Feedback>
-            </Form.Group>
+  <InputGroup>
+    <Form.Control
+      type={showConfirmPassword ? "text" : "password"}
+      name="confirmPassword"
+      placeholder="Confirmar contraseña*"
+      value={values.confirmPassword}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      isInvalid={!!errors.confirmPassword && touched.confirmPassword}
+    />
+    <InputGroup.Text onClick={toggleConfirmPasswordVisibility} style={{ cursor: "pointer" }}>
+      {showConfirmPassword ? (
+        <Eye style={{ color: "#F08318" }} />  // Ícono para ocultar (color naranja)
+      ) : (
+        <EyeOff style={{ color: "#F08318" }} />  // Ícono para mostrar (color naranja)
+      )}
+    </InputGroup.Text>
+  </InputGroup>
+  <Form.Control.Feedback type="invalid">
+    {errors.confirmPassword}
+  </Form.Control.Feedback>
+</Form.Group>
 
             {/* Botón de enviar */}
             <Button
