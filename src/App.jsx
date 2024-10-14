@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import SplashScreen from "./Components/SplashScreen/SplashScreen";
+import SplashScreen from "./Pages/SplashScreen";
 import RoutesConfig from "./routes/RoutesConfig";
 
 

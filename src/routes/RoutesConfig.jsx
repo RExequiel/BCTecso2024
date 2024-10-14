@@ -1,17 +1,19 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "../Pages/Home";
 import Login from "../Pages/Login";
-import SelectionUsuario from "../Components/SeleccionUsuario/SelectionUsuario";
+import SelectionUsuario from "../Pages/SelectionUsuario";
+import Screen from "../Pages/StartedScreen";
 import Mascotero from "../Pages/ResgiterMascotero";
 import Protectora from '../Components/Protectora/Protectora';
 import ValidacionCuenta from "../Components/ValidacionRegistro/ValidacionCuenta";
 import CorreoRegistrado from "../Components/ValidacionRegistro/CorreoRegistrado";
 import SuccesScreen from "../Components/ValidacionRegistro/SuccesScreen";
+import ExampleRedux from "../Pages/ExampleRedux";
 
 const RoutesConfig = () => {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/home" element={<Home />} />
       <Route path="/seleccion-usuario" element={<SelectionUsuario />} />
       <Route path="/mascotero" element={<Mascotero />} />
@@ -19,7 +21,9 @@ const RoutesConfig = () => {
       <Route path="/validacion-cuenta" element={<ValidacionCuenta />} />
       <Route path="/correo-registrado" element={<CorreoRegistrado />} />
       <Route path="/succes-screen" element={<SuccesScreen />} />
-
+      <Route path="/" element={<Screen />} />
+      <Route path="/mascotero" element={<Mascotero />} />
+      <Route path="/exampleRedux" element={<ExampleRedux />} />
     </Routes>
   );
 };
