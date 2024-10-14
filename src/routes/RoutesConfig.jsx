@@ -4,6 +4,7 @@ import Login from "../Pages/Login";
 import SelectionUsuario from "../Pages/SelectionUsuario";
 import Screen from "../Pages/StartedScreen";
 import Mascotero from "../Pages/ResgiterMascotero";
+import HomeProtectoraPage from "../pages/HomeProtectora";
 import Protectora from '../Components/Protectora/Protectora';
 import ValidacionCuenta from "../Components/ValidacionRegistro/ValidacionCuenta";
 import CorreoRegistrado from "../Components/ValidacionRegistro/CorreoRegistrado";
@@ -27,6 +28,7 @@ const RoutesConfig = () => {
       <Route path="/" element={<Screen />} />
       <Route path="/mascotero" element={<Mascotero />} />
       <Route path="/exampleRedux" element={<ExampleRedux />} />
+      <Route path="/homeProtectora" element={<HomeProtectoraPage />} />
       <Route path="/validacion" element={<Validacion />} />
       <Route path="/registro" element={<Registro />} />
       <Route path="/success" element={<Success />} />
