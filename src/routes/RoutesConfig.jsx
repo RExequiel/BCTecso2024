@@ -4,6 +4,7 @@ import Login from "../Pages/Login";
 import SelectionUsuario from "../Components/SeleccionUsuario/SelectionUsuario";
 import Mascotero from "../Pages/ResgiterMascotero";
 import ExampleRedux from "../pages/ExampleRedux";
+import HomeProtectoraPage from "../pages/HomeProtectora";
 
 const RoutesConfig = () => {
   return (
@@ -13,6 +14,7 @@ const RoutesConfig = () => {
       <Route path="/seleccionUsuario" element={<SelectionUsuario />} />
       <Route path="/mascotero" element={<Mascotero />} />
       <Route path="/exampleRedux" element={<ExampleRedux />} />
+      <Route path="/homeProtectora" element={<HomeProtectoraPage />} />
     </Routes>
   );
 };
