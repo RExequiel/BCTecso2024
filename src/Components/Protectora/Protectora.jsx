@@ -115,36 +115,32 @@ const Protectora = () => {
     };
 
     try {
-      console.log(JSON.stringify(payload, null, 2));
-
       const response = await axios.post('http://localhost:8081/api/Protectoras/registro', payload);
-
+  
       if (response.status === 200) {
         
         emailjs.send(
-          'service_id', 
-          'template_id', 
+          'service_mundo_mascotas', 
+          'template_mundo_mascotas', 
           {
-            to_name: formData.nombre,
+            nombreProtectora: formData.nombre,
+            confirmation_link: '',
             to_email: formData.email,
           },
-          'public_key' 
+          'i9_pXg859yIpLP9CJ' 
         ).then((result) => {
           console.log('Correo enviado:', result.text);
         }).catch((error) => {
           console.error('Error al enviar el correo:', error.text);
         });
-
+  
         setIsRegistered(true);
         setMessage('¡Registro exitoso! Te hemos enviado un correo para confirmar tu cuenta.');
         navigate('/validacion-cuenta'); 
-      } else {
-        setMessage('Error al registrar la protectora.');
       }
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.message === 'Correo ya registrado') {
-        setMessage('El correo ya se encuentra registrado.');
-        navigate('/correo-registrado'); 
+      if (error.response && error.response.status === 400 && error.response.data.errors && error.response.data.errors[0].includes("Ya existe un usuario registrado con esa dirección de email")) {
+        navigate('/correo-registrado');
       } else {
         console.error('Error al enviar los datos:', error);
         setMessage('Ocurrió un error al registrar la protectora.');
