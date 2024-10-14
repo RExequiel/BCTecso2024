@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../assets/img/icons/Iso@4x.png';
+import logo from '../../assets/img/icons/logo.png';
 
 const MumaLogo = () => {
   return (
