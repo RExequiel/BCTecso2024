@@ -121,6 +121,7 @@ function Login() {
                   className="mt-4 align-self-center w-100"
                   style={{backgroundColor: "#F08318", borderColor: "#F08318", color: "#FFFF", height: "50px", width: "328px", }}
                   disabled={isSubmitting}
+                  onClick={ () => navigate ("/homeProtectora")}
                 >
                   Ingresar
                 </Button>
