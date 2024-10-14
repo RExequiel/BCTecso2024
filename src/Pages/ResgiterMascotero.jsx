@@ -4,11 +4,13 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { Form, Button, InputGroup, Container } from "react-bootstrap";
 import { useState } from "react";
-import MumaLogo from '../Components/icons/logo_muma';
+import MumaLogo from '../Components/Login/logo_muma';
 import mascoterosService from "../services/mascoterosService";
 
 const validationSchema = Yup.object().shape({
-  fullName: Yup.string().required("Nombre y apellido son requeridos"),
+  fullName: Yup.string()
+    .required("Nombre y apellido son requeridos")
+    .matches(/^[a-zA-Z]+\s[a-zA-Z]+$/, "Debes ingresar nombre y apellido"),
   email: Yup.string()
     .email("Debe ingresar un email válido")
     .required("Email es requerido"),
@@ -56,10 +58,9 @@ function RegisterMascotero() {
       
     } catch (error) {
       if (error.response.status === 400) {
-        alert("El email ya se encuentra registrado. Por favor, inicia sesión.");
-      }else{
-      console.error("Error al registrar:", error);
-      alert("Ocurrió un error al registrarse. Por favor, inténtelo de nuevo.");
+        alert("Ocurrió un error al registrarse. Por favor, inténtelo de nuevo.");
+      } else {
+        alert("Ocurrio un error al registrarse. Por favor, inténtelo de nuevo.");
       }
     }
   };
