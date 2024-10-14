@@ -6,8 +6,20 @@ import UserMascotero from '../assets/img/UserMascotero.png';
 import UserProtectors from '../assets/img/UserProtectors.png';
 import asset1 from '../assets/img/Asset@4x.png';
 import asset from '../assets/img/Asset-blanco@4x.png';
+import { useNavigate } from 'react-router-dom';
 
 const SelectionUsuario = () => {
+
+  const navigate = useNavigate();
+
+  const handleMascoteroClick = () => {
+    navigate('/mascotero');
+  };
+
+  const handleProtectoraClick = () => {
+    navigate('/protectora'); 
+  };
+
   return (
     <>
       <View style={styles.container}>
@@ -23,6 +35,7 @@ const SelectionUsuario = () => {
             src={UserMascotero} 
             style={styles.overlayImage} 
             resizeMode="contain"
+            onClick={handleMascoteroClick}
           />
           <Image 
             src={asset1}
@@ -43,6 +56,7 @@ const SelectionUsuario = () => {
             src={asset} 
             style={styles.imageAsset1} 
             resizeMode="contain"
+            onClick={handleProtectoraClick}
           />
           <Text style={styles.imageText}>Protectora</Text>
         </View>
