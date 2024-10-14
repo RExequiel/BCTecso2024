@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import emailjs from 'emailjs-com';
 import styles from './Protectora.module.css';
+import MumaLogo from '../../assets/img/icons/logo.png'
 
 const Protectora = () => {
   const [formData, setFormData] = useState({
@@ -152,6 +153,12 @@ const Protectora = () => {
 
   return (
     <div className={styles.container}>
+      <div className={styles["image-container"]}>
+                { <img 
+                    src={MumaLogo}
+                    className={styles["image"]}
+                /> }
+      </div>
       <form onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
           <input
