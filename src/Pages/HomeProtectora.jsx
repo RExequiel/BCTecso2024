@@ -1,4 +1,4 @@
-import HomeProtectora from "../components/Protectora/HomeProtectora";
+import HomeProtectora from "../Components/Protectora/HomeProtectora";
 
 const HomeProtectoraPage = () => {
   return (
