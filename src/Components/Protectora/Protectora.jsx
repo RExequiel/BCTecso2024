@@ -19,6 +19,7 @@ const Protectora = () => {
     calle: '',
     numero: '',
     piso: '',
+    cantidadDeMascotas:'',
     departamento: '',
     sitioWeb: '',
     instagram: '',
