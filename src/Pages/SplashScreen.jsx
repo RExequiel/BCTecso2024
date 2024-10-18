@@ -3,7 +3,6 @@ import SplashScreenImage from '../assets/img/icons/Logo-bajada@4x.png';
 import Paw from '../Components/SplashScreen/Paws'
 import { Image } from 'react-bootstrap';
 
-
 function SplashScreen() {
     return (
         <>
