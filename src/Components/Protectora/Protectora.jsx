@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import emailjs from 'emailjs-com';
 import styles from './Protectora.module.css';
 import MumaLogo from '../../assets/img/icons/logo.png'
+import protectorasService from '../../services/protectorasService';
+import { Eye, EyeOff } from "react-feather";
 
 const Protectora = () => {
   const [formData, setFormData] = useState({
@@ -24,13 +26,15 @@ const Protectora = () => {
     instagram: '',
     facebook: '',
   });
-  
+
   const [provincias, setProvincias] = useState([]);
   const [ciudades, setCiudades] = useState([]);
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState('');
   const [isRegistered, setIsRegistered] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); 
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);  
 
   const navigate = useNavigate(); 
 
@@ -116,10 +120,9 @@ const Protectora = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:8081/api/Protectoras/registro', payload);
+      const response = await protectorasService.registerProtectora(payload); 
   
       if (response.status === 200) {
-        
         emailjs.send(
           'service_mundo_mascotas', 
           'template_mundo_mascotas', 
@@ -128,7 +131,7 @@ const Protectora = () => {
             confirmation_link: '',
             to_email: formData.email,
           },
-          'i9_pXg859yIpLP9CJ' 
+          'i9_pXg859yIpLP9CJ'
         ).then((result) => {
           console.log('Correo enviado:', result.text);
         }).catch((error) => {
@@ -154,10 +157,10 @@ const Protectora = () => {
   return (
     <div className={styles.container}>
       <div className={styles["image-container"]}>
-                { <img 
-                    src={MumaLogo}
-                    className={styles["image"]}
-                /> }
+        { <img 
+            src={MumaLogo}
+            className={styles["image"]}
+        /> }
       </div>
       <form onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
@@ -193,27 +196,38 @@ const Protectora = () => {
           />
         </div>
         <div className={styles.formGroup}>
-          <input
-            type="password"
-            name="contrasena"
-            value={formData.contrasena}
-            onChange={handleChange}
-            className={styles.input}
-            placeholder="Contraseña"
-            required
-          />
+          <div className={styles.passwordContainer}>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="contrasena"
+              value={formData.contrasena}
+              onChange={handleChange}
+              className={styles.input}
+              placeholder="Contraseña"
+              required
+            />
+            <span className={styles.eyeIcon} onClick={() => setShowPassword(!showPassword)}>
+              {showPassword ? <Eye style={{ color: "#F08318" }} /> : <EyeOff style={{ color: "#F08318" }} />}
+            </span>
+          </div>
         </div>
         <div className={styles.formGroup}>
-          <input
-            type="password"
-            name="confirmarContrasena"
-            value={formData.confirmarContrasena}
-            onChange={handleChange}
-            className={styles.input}
-            placeholder="Confirmar Contraseña"
-            required
-          />
+          <div className={styles.passwordContainer}>
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              name="confirmarContrasena"
+              value={formData.confirmarContrasena}
+              onChange={handleChange}
+              className={styles.input}
+              placeholder="Confirmar Contraseña"
+              required
+            />
+            <span className={styles.eyeIcon} onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+              {showConfirmPassword ? <Eye style={{ color: "#F08318" }} /> : <EyeOff style={{ color: "#F08318" }} />}
+            </span>
+          </div>
         </div>
+        {/* Añadir campos adicionales como provincia, ciudad, calle, etc. */}
         <div className={styles.formGroup}>
           <select
             name="provincia"
@@ -286,36 +300,6 @@ const Protectora = () => {
             onChange={handleChange}
             className={styles.input}
             placeholder="Departamento"
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <input
-            type="text"
-            name="sitioWeb"
-            value={formData.sitioWeb}
-            onChange={handleChange}
-            className={styles.input}
-            placeholder="Sitio Web"
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <input
-            type="text"
-            name="instagram"
-            value={formData.instagram}
-            onChange={handleChange}
-            className={styles.input}
-            placeholder="Instagram"
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <input
-            type="text"
-            name="facebook"
-            value={formData.facebook}
-            onChange={handleChange}
-            className={styles.input}
-            placeholder="Facebook"
           />
         </div>
         <button type="submit" className={styles.registroButton} disabled={loading}>

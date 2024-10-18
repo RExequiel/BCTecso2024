@@ -30,25 +30,21 @@ const validationSchema = Yup.object().shape({
 function RegisterMascotero() {
   const navigate = useNavigate();
 
-  // Manejar envío del formulario
   const handleMascoteroSubmit = async (values) => {
     console.log("Valores del formulario:", values);
     try {
-      // Separar el nombre y apellido
       const [nombre, ...resto] = values.fullName.split(" ");
-      const apellido = resto.join(" ") || ""; // Si no hay apellido, asigna una cadena vacía
+      const apellido = resto.join(" ") || ""; 
 
-      // Crear el objeto mascoteroData
       const mascoteroData = {
-        nombre: nombre,          // El primer elemento es el nombre
-        apellido: apellido,      // Todo lo demás es considerado el apellido
+        nombre: nombre,          
+        apellido: apellido,      
         email: values.email,
         password: values.password,
       };
 
       console.log("Datos de registro enviados:", mascoteroData);
 
-      // Llamar al servicio de registro
       const response = await mascoterosService.registerMascotero(mascoteroData);
 
       if (response.mascotero.email == mascoteroData.email) {
@@ -65,12 +61,10 @@ function RegisterMascotero() {
   return (
     <div className="bg-white vh-100 d-flex justify-content-center align-items-center">
       <div className="text-white rounded-2 py-4" style={{ width: "360px", height: "812px" }}>
-        {/* Logo */}
         <div className="text-center mb-4">
           <MumaLogo />
         </div>
 
-        {/* Formulario de Mascotero */}
         <Mascotero onSubmit={handleMascoteroSubmit} />
       </div>
     </div>
@@ -106,7 +100,6 @@ function Mascotero({ onSubmit }) {
         }) => (
           <Form onSubmit={handleSubmit}>
             
-            {/* Nombre y apellido */}
             <Form.Group controlId="formBasicFullName">
               <Form.Control
                 type="text"
@@ -122,7 +115,6 @@ function Mascotero({ onSubmit }) {
               </Form.Control.Feedback>
             </Form.Group>
 
-            {/* Email */}
             <Form.Group controlId="formBasicEmail" className="mt-3">
               <Form.Control
                 type="email"
@@ -138,7 +130,6 @@ function Mascotero({ onSubmit }) {
               </Form.Control.Feedback>
             </Form.Group>
 
-            {/* Contraseña */}
             <Form.Group controlId="formBasicPassword" className="mt-3">
               <InputGroup>
                 <Form.Control
@@ -148,22 +139,21 @@ function Mascotero({ onSubmit }) {
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  isInvalid={touched.password && !!errors.password} // Verifica si el campo fue tocado y tiene errores
+                  isInvalid={touched.password && !!errors.password} 
                 />
                <InputGroup.Text onClick={togglePasswordVisibility} style={{ cursor: "pointer" }}>
                 {showPassword ? (
-                  <Eye style={{ color: "#F08318" }} />  // Ícono para ocultar (color naranja)
+                  <Eye style={{ color: "#F08318" }} />  
                 ) : (
-                  <EyeOff style={{ color: "#F08318" }} />  // Ícono para mostrar (color naranja)
+                  <EyeOff style={{ color: "#F08318" }} /> 
                 )}
               </InputGroup.Text>
                 <Form.Control.Feedback type="invalid">
-                  {errors.password} {/* Muestra el mensaje de error si hay */}
+                  {errors.password} 
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
 
-            {/* Confirmar Contraseña */}
             <Form.Group controlId="formBasicConfirmPassword" className="mt-3">
   <InputGroup>
     <Form.Control
@@ -177,9 +167,9 @@ function Mascotero({ onSubmit }) {
     />
     <InputGroup.Text onClick={toggleConfirmPasswordVisibility} style={{ cursor: "pointer" }}>
       {showConfirmPassword ? (
-        <Eye style={{ color: "#F08318" }} />  // Ícono para ocultar (color naranja)
+        <Eye style={{ color: "#F08318" }} />  
       ) : (
-        <EyeOff style={{ color: "#F08318" }} />  // Ícono para mostrar (color naranja)
+        <EyeOff style={{ color: "#F08318" }} /> 
       )}
     </InputGroup.Text>
   </InputGroup>
@@ -188,7 +178,6 @@ function Mascotero({ onSubmit }) {
   </Form.Control.Feedback>
 </Form.Group>
 
-            {/* Botón de enviar */}
             <Button
               variant="primary"
               type="submit"
@@ -203,7 +192,7 @@ function Mascotero({ onSubmit }) {
                 backgroundColor: "#F08318",
                 border: "none",
                 display: "block",
-                margin: "0 auto",        // Centra el botón horizontalmente
+                margin: "0 auto",       
               }}
             >
               Registrarse

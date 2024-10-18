@@ -10,7 +10,7 @@ const validationSchema = Yup.object().shape({
     .email("Debe ingresar un email")
     .required("Usuario es requerido"),
   password: Yup.string()
-    .matches(/^\d+$/, "La contraseña debe ser numérico")
+    //.matches(/^\d+$/, "La contraseña debe ser numérico")
     .required("La contraseña es requerida"),
 });
 
@@ -23,7 +23,7 @@ function Login() {
     try {
       const response = await authenticationService.login(values.email, values.password);
       console.log("Response:", response.data, values);
-      navigate("/home");
+      navigate("/homeProtectora");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -121,7 +121,7 @@ function Login() {
                   className="mt-4 align-self-center w-100"
                   style={{backgroundColor: "#F08318", borderColor: "#F08318", color: "#FFFF", height: "50px", width: "328px", }}
                   disabled={isSubmitting}
-                  onClick={ () => navigate ("/homeProtectora")}
+                  //onClick={ () => navigate ("/homeProtectora")}
                 >
                   Ingresar
                 </Button>
@@ -145,4 +145,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Login;

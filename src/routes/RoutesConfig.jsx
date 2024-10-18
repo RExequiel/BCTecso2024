@@ -13,6 +13,7 @@ import ExampleRedux from "../Pages/ExampleRedux";
 import Validacion from "../Components/Mascotero/Validacion";
 import Registro from "../Components/Mascotero/Registro";
 import Success from "../Components/Mascotero/Success";
+import HomeMascoteroPage from "../Pages/HomeMascotero";
 
 const RoutesConfig = () => {
   return (
@@ -32,6 +33,8 @@ const RoutesConfig = () => {
       <Route path="/validacion" element={<Validacion />} />
       <Route path="/registro" element={<Registro />} />
       <Route path="/success" element={<Success />} />
+      <Route path="/home-mascotero" element={<HomeMascoteroPage />} />
+
     </Routes>
   );
 };

@@ -36,10 +36,8 @@ const HomeProtectora = () => {
     console.log("MASCOTAS: ", loading, mascotas)
     return (
         <Container>
-            {/* Componente NavBar */}
             <NavBar />
             <Container>
-                {/* Barra de búsqueda */}
                 <Row className="justify-content-between align-items-center my-3">
                     <Col xs={9}>
                         <Form.Control type="text" placeholder="Nombre; estado, protectora y sexo" />
@@ -51,7 +49,6 @@ const HomeProtectora = () => {
                     </Col>
                 </Row>
 
-                {/* Categorías */}
                 <Row className="my-3">
                     <Col>
                         <h5>Categorías</h5>
@@ -65,7 +62,6 @@ const HomeProtectora = () => {
                     </Col>
                 </Row>
 
-                {/* Animales */}
                 <Row className="my-3">
                     <Col>
                         <h5>Animales</h5>
@@ -98,7 +94,6 @@ const HomeProtectora = () => {
                     </Col>
                 </Row>
 
-                {/* Botón flotante */}
                 <Button variant="warning" className="rounded-circle position-fixed" style={{ bottom: '20px', right: '20px' }}>
                     <BsPlus size={25} />
                 </Button>
